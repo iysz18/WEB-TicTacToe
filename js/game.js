@@ -5,12 +5,20 @@ const playerModule = (() => {
         O: { token: "O" },
     };
 
-    const getToken = (playerToken) => players[playerToken]?.token;
+    let currentPlayerTurn = players.X;
 
+    const getToken = (playerToken) => players[playerToken]?.token;
+    const switchTurn = () => {
+        currentPlayerTurn = currentPlayerTurn === players.X ? players.O : players.X; 
+    };
+    
     return {
         getToken,
+        switchTurn,        
     }
 })();
+
+
 
 
 const cellArray = document.querySelectorAll(".cell");
