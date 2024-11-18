@@ -15,3 +15,21 @@ const playersModule = (() => {
         switchTurn,
     };
 })();
+
+
+const gameboardModule = () => {
+    // get each cell and store it in a nodelist
+    const cellNodeList = document.querySelectorAll(".cell");
+    cellNodeList.forEach(cell => {
+        cell.addEventListener("click", () => {
+            
+       });
+    });
+
+    // reference to the div "moveLeftDisplay"
+    const moveCounter = document.querySelector(".movesLeftDisplay");
+    
+
+}; 
+
+gameboardModule();
