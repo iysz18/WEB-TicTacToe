@@ -20,7 +20,7 @@ const playersModule = (() => {
 // holds the variables referecing the DOM
 const gameboardModule = (() => {
     // store each cell from the gameboard in a nodelist
-    const cells = document.querySelectorAll(".cells"); 
+    const cells = document.querySelectorAll(".cell"); 
 
     // the logic to mark the clicked cell if possible (empty = place / occupied = alert players)
     const markCell = (cell, token) => {
@@ -34,35 +34,33 @@ const gameboardModule = (() => {
         }
     };    
 
-    // adds to each cell from the cells nodelist the click event and passes the onClickCell function
-    const addEvents = (onCellClick) => {
+    // add to each cell the click event, mark the cell with the currenPlayers
+    // token if the cell is not occupied
+    const addEvents = () => {
         cells.forEach(cell => {
-            cell.addEventListener("click", onCellClick());
+            cell.addEventListener("click", () => {
+                const currentPlayer = playersModule.getCurrentPlayer();
+                if (!cell.textContent.trim()) {
+                    markCell(cell, currentPlayer);
+                    playersModule.switchTurn();
+                } else alert("Cell is already occupied!");
+            });
         });
     };
     
     return {
-        markCell,
         addEvents,
-    }
+    };
 })();
 
 // the gameController module has to controll of over the game and initializes the gameboardModue
 const gameController = (() => {
-    // functino to handle the click on each cell clicked
-    const handleCellClick = () => {
-        if (gameboardModule.markCell(cell, currentPlayer)) {
-            // if markCell returns true, swap turns between players because token has been placed
-            playersModule.switchTurn();
-        }
-    };
-
     // intialize the gamebaord
     const initialize = () => {
-        gameboardModule.addEvents(handleCellClick);
+        gameboardModule.addEvents();
     };
 
-    return { initialize };
+    return { initialize, };
 })();
 
 // start the game by useing gameController to initialize the modules from gameboardModule
