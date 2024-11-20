@@ -42,12 +42,19 @@ const gameboardModule = (() => {
                 const currentPlayer = playersModule.getCurrentPlayer();
                 if (!cell.textContent.trim()) {
                     markCell(cell, currentPlayer);
+                    // update the moves left 
+                    updateLeftMoves();
                     playersModule.switchTurn();
                 } else alert("Cell is already occupied!");
             });
         });
     };
-    
+
+    // referencing the movesLeftDisplay to change the amount of possible moves left
+    let movesLeft = 9;
+    const movesLeftCount = document.querySelector(".movesLeftCount");
+    const updateLeftMoves = () => movesLeftCount.textContent = --movesLeft;
+       
     return {
         addEvents,
     };
@@ -55,6 +62,7 @@ const gameboardModule = (() => {
 
 // the gameController module has to controll of over the game and initializes the gameboardModue
 const gameController = (() => {
+    // after each turn update movesLeft count and check for winner
     // intialize the gamebaord
     const initialize = () => {
         gameboardModule.addEvents();
