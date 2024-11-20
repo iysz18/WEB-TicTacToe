@@ -44,6 +44,7 @@ const gameboardModule = (() => {
                     markCell(cell, currentPlayer);
                     // update the moves left 
                     updateLeftMoves();
+                    checkWinner(); // checks for winner and for 0 available moves
                     playersModule.switchTurn();
                 } else alert("Cell is already occupied!");
             });
@@ -54,11 +55,24 @@ const gameboardModule = (() => {
     let movesLeft = 9;
     const movesLeftCount = document.querySelector(".movesLeftCount");
     const updateLeftMoves = () => movesLeftCount.textContent = --movesLeft;
+
+    // retrieve the movesLeft variable
+    const getLeftMoves = () => movesLeft;
        
     return {
         addEvents,
+        getLeftMoves,
     };
 })();
+
+const checkWinner = () => {
+    // TODO: implement the checkWinner function: cancel game when winner or no mvoes left
+    if (gameboardModule.getLeftMoves());
+        // continue to check for winner
+    else alert(`Game Over! Player ${playersModule.getCurrentPlayer()} won!`);
+    // when last mark placed, the mark won't appear on the board
+    // because the game ends before that can happen, fix it!
+};
 
 // the gameController module has to controll of over the game and initializes the gameboardModue
 const gameController = (() => {
