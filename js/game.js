@@ -27,6 +27,7 @@ const gameboardModule = (() => {
         if (!cell.textContent.trim()) {
             // if true place the token of the current player
             cell.textContent = token;
+            cell.dataset.token = token;
             return true;
         } else {
             alert("Cell is already occupied!");
@@ -58,20 +59,21 @@ const gameboardModule = (() => {
 
     // retrieve the movesLeft variable
     const getLeftMoves = () => movesLeft;
-       
+
+    const getCellData = () => {
+        cells.forEach(cell => console.log(cell.dataset.token));
+    };
+    
     return {
         addEvents,
         getLeftMoves,
+        getCellData,
     };
 })();
 
 const checkWinner = () => {
     // TODO: implement the checkWinner function: cancel game when winner or no mvoes left
-    if (gameboardModule.getLeftMoves());
-        // continue to check for winner
-    else alert(`Game Over! Player ${playersModule.getCurrentPlayer()} won!`);
-    // when last mark placed, the mark won't appear on the board
-    // because the game ends before that can happen, fix it!
+    
 };
 
 // the gameController module has to controll of over the game and initializes the gameboardModue
