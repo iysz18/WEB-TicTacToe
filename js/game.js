@@ -63,17 +63,23 @@ const gameboardModule = (() => {
     const getCellData = () => {
         cells.forEach(cell => console.log(cell.dataset.token));
     };
+
+
+    const dataSetList = () => {
+        let dataTokens = Array.from(cells).map(cell => cell.dataset.token || "");
+        return dataTokens;
+    };
     
     return {
         addEvents,
         getLeftMoves,
         getCellData,
+        dataSetList,
     };
 })();
 
 const checkWinner = () => {
-    // TODO: implement the checkWinner function: cancel game when winner or no mvoes left
-    
+
 };
 
 // the gameController module has to controll of over the game and initializes the gameboardModue
