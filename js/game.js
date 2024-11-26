@@ -43,10 +43,10 @@ const gameboardModule = (() => {
                 const currentPlayer = playersModule.getCurrentPlayer();
                 if (!cell.textContent.trim()) {
                     markCell(cell, currentPlayer);
+                    
                     // update the moves left 
                     updateLeftMoves();
                     checkWinner.checkCombinations(); // checks for winner and for 0 available moves
-                    playersModule.switchTurn();
                 } else alert("Cell is already occupied!");
             });
         });
@@ -80,7 +80,6 @@ const gameboardModule = (() => {
 
 const checkWinner = (() => {
     // store every possible combination in an 2D array
-    
     const winCombinations = [
         // Rows
         [0, 1, 2], // row 0
@@ -98,19 +97,31 @@ const checkWinner = (() => {
     ];
 
     const checkCombinations = () => {
-        // store the gamebaord as an array, gets updated after each turn
+        // Get the latest board state
         let board = gameboardModule.getdataSetList();
-
-        // iterate over and check if any combination is met
+    
+        // Check for a winner first
         for (const combination of winCombinations) {
             let [a, b, c] = combination; // Destructure the indices from the current combination
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-                console.log("in if");
                 setTimeout(() => {
                     alert(`Player ${playersModule.getCurrentPlayer()} Won!`);
-                });
+                }, 0); // Defer to ensure DOM updates
+                return true; // Stop further checks after finding a winner
             }
         }
+    
+        // Check for a draw (if no moves left and no winner)
+        const movesLeft = gameboardModule.getLeftMoves();
+        if (movesLeft <= 0) {
+            setTimeout(() => alert("Game Over! No moves left."), 0);
+            return true;
+        }
+        playersModule.switchTurn();
+    
+        // No winner or draw; game continues
+        return false;
+        
     };
 
     return { checkCombinations };
