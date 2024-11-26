@@ -45,7 +45,7 @@ const gameboardModule = (() => {
                     markCell(cell, currentPlayer);
                     // update the moves left 
                     updateLeftMoves();
-                    checkWinner(); // checks for winner and for 0 available moves
+                    checkWinner.checkCombinations(); // checks for winner and for 0 available moves
                     playersModule.switchTurn();
                 } else alert("Cell is already occupied!");
             });
@@ -57,7 +57,7 @@ const gameboardModule = (() => {
     const movesLeftCount = document.querySelector(".movesLeftCount");
     const updateLeftMoves = () => movesLeftCount.textContent = --movesLeft;
 
-    // retrieve the movesLeft variable
+    // get the movesLeft variable
     const getLeftMoves = () => movesLeft;
 
     const getCellData = () => {
@@ -78,40 +78,46 @@ const gameboardModule = (() => {
     };
 })();
 
-const checkWinner = () => {
-    // dataTokens is an array holding each players token
-    // it will be used to determine the winner, checking each winning condition rahter using
-    // textContent of each cell to find the winner
-    const dataTokens = gameboardModule.getdataSetList();
-    const winningCombinations = [
-        [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-        [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-        [0, 4, 8], [2, 4, 6]             // Diagonals
-    ];
+const checkWinner = (() => {
+    // store every possible combination in an 2D array
     
-    // check if any winning combination is satisfied
-    for (const combination of winningCombinations) {
-        const [a, b, c] = combination;
-        if (dataTokens[a] && dataTokens[a]  === dataTokens[b] && dataTokens[a] === dataTokens[c]) {
-            alert(`Player ${dataTokens[a]}`);
-            return true;
+    const winCombinations = [
+        // Rows
+        [0, 1, 2], // row 0
+        [3, 4, 5], // row 1
+        [6, 7, 8], // row 2
+    
+        // Columns
+        [0, 3, 6], // col 0
+        [1, 4, 7], // col 1
+        [2, 5, 8], // col 2
+    
+        // Diagonals
+        [0, 4, 8], // top-left to bottom-right
+        [2, 4, 6], // top-right to bottom-left
+    ];
+
+    const checkCombinations = () => {
+        // store the gamebaord as an array, gets updated after each turn
+        let board = gameboardModule.getdataSetList();
+
+        // iterate over and check if any combination is met
+        for (const combination of winCombinations) {
+            let [a, b, c] = combination; // Destructure the indices from the current combination
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                console.log("in if");
+                setTimeout(() => {
+                    alert(`Player ${playersModule.getCurrentPlayer()} Won!`);
+                });
+            }
         }
-    }
+    };
 
-    // check for draw (no moves left)
-    if (gameboardModule.movesLeft() === 0) {
-        alert("It's a draw! Game over.");
-        return true;
-    }
-
-    return false; // no winner or draw yet
-};
+    return { checkCombinations };
+})();
 
 // the gameController module has to controll of over the game and initializes the gameboardModue
 const gameController = (() => {
-    // after each turn update movesLeft count and check for winner
-    
-    }
     // intialize the gamebaord
     const initialize = () => {
         gameboardModule.addEvents();
