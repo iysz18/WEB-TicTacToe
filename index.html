@@ -8,6 +8,10 @@
 </head>
 <body>
     <div class="container">
+        <label for="player1"></label>
+        <input type="text" id="player1">
+        <label for="player2"></label>
+        <input type="text" id="player2">
         <h1>Tic Tac Toe</h1>
         <!-- The gameboard -->
         <div class="gameboard-wrapper">
@@ -22,7 +26,7 @@
             <div class="cell" data-token></div>
         </div>
         <div class="movesLeftDisplay">Moves Left:
-            <a>0</a>
+            <a class="movesLeftCount">9</a>
         </div>
     </div>
     <script src="./js/game.js"></script>
