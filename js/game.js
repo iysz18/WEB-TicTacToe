@@ -1,5 +1,5 @@
 const playersModule = (() => {
-    const players = { X: "X", O: "O" };
+    const players = { X: `X`, O: `O` };
 
     let currentPlayer = players.X; 
 
@@ -69,12 +69,32 @@ const gameboardModule = (() => {
         let dataTokens = Array.from(cells).map(cell => cell.dataset.token || "");
         return dataTokens;
     };
+
+    // resetting logic of the game
+    const resetGame = document.querySelector(".restart");
+    resetGame.addEventListener("click", () => {
+        cells.forEach(cell => cell.dataset.token = undefined);
+        cells.forEach(cell => cell.textContent = "");
+        movesLeft = 9;
+        movesLeftCount.textContent = movesLeft;
+
+
+        // for debugging, it shows the entry of each cell fromt he cell nodeList, to enable it, uncomment or
+        // put it into another () => arrow function and call it
+        // const tokensObject = {};
+        // cells.forEach((cell, index) => {
+        //     tokensObject[`cell${index}`] = cell.dataset.token || null; // Use null for unset tokens
+        // });
+
+        // console.log(tokensObject); // Log the object to the console
+    });
     
     return {
         addEvents,
         getLeftMoves,
         getCellData,
         getdataSetList,
+        resetGame,
     };
 })();
 
