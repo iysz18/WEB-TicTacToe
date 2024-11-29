@@ -1,10 +1,34 @@
 const playersModule = (() => {
-    const players = { X: `X`, O: `O` };
+    // store player names
+    const playerX = document.getElementById("player1");
+    const playerO = document.getElementById("player2");
+
+    playerX.addEventListener("blur", () => {
+        players.name = playerX.value;
+    });
+    
+    playerO.addEventListener("blur", () => {
+        players.name = playerO.value;
+    });
+    
+    const players = {
+        X: {
+            token: "X",
+            name: '',
+        },
+        O: {
+            token: "O",
+            name: '',
+        }
+    }
+
+    // getting the player names for debugging, uncomment to use here and in return statement
+    const getPlayerNames = () => players;
 
     let currentPlayer = players.X; 
 
     const getCurrentPlayer = () => currentPlayer; 
-    const getPlayerToken = (player) => players[player];
+    const getPlayerToken = (player) => players[player].token;
     const switchTurn = () => {
         currentPlayer = currentPlayer === players.X ? players.O : players.X;
     };
@@ -12,6 +36,7 @@ const playersModule = (() => {
     return {
         getCurrentPlayer,
         getPlayerToken,
+        getPlayerNames,
         switchTurn,
     };
 })();
@@ -23,11 +48,11 @@ const gameboardModule = (() => {
     const cells = document.querySelectorAll(".cell"); 
 
     // the logic to mark the clicked cell if possible (empty = place / occupied = alert players)
-    const markCell = (cell, token) => {
+    const markCell = (cell, playerToken) => {
         if (!cell.textContent.trim()) {
             // if true place the token of the current player
-            cell.textContent = token;
-            cell.dataset.token = token;
+            cell.textContent = playerToken.token;
+            cell.dataset.token = playerToken.token;
             return true;
         } else {
             alert("Cell is already occupied!");
@@ -125,7 +150,7 @@ const checkWinner = (() => {
             let [a, b, c] = combination; // Destructure the indices from the current combination
             if (board[a] && board[a] === board[b] && board[a] === board[c]) {
                 setTimeout(() => {
-                    alert(`Player ${playersModule.getCurrentPlayer()} Won!`);
+                    alert(`Player ${playersModule.getCurrentPlayer().name} Won!`);
                 }, 0); // Defer to ensure DOM updates
                 return true; // Stop further checks after finding a winner
             }
