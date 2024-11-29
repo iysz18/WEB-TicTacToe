@@ -4,11 +4,11 @@ const playersModule = (() => {
     const playerO = document.getElementById("player2");
 
     playerX.addEventListener("blur", () => {
-        players.name = playerX.value;
+        players.X.name = playerX.value;
     });
     
     playerO.addEventListener("blur", () => {
-        players.name = playerO.value;
+        players.O.name = playerO.value;
     });
     
     const players = {
@@ -25,7 +25,7 @@ const playersModule = (() => {
     // getting the player names for debugging, uncomment to use here and in return statement
     const getPlayerNames = () => players;
 
-    let currentPlayer = players.X; 
+    let currentPlayer = players.X;
 
     const getCurrentPlayer = () => currentPlayer; 
     const getPlayerToken = (player) => players[player].token;
