@@ -22,15 +22,7 @@ const playersModule = (() => {
         }
     }
 
-
     let currentPlayer = players.X;
-
-    // to reset the player names
-    const resetPlayerNames = () => {
-        players.X.name = undefined
-        players.O.name = undefined
-        console.log(players);
-    };
     
     const getCurrentPlayer = () => currentPlayer; 
     const getPlayerToken = (player) => players[player].token;
@@ -41,7 +33,6 @@ const playersModule = (() => {
     return {
         getCurrentPlayer,
         getPlayerToken,
-        resetPlayerNames,
         switchTurn,
     };
 })();
