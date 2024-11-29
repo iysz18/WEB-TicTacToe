@@ -22,11 +22,16 @@ const playersModule = (() => {
         }
     }
 
-    // getting the player names for debugging, uncomment to use here and in return statement
-    const getPlayerNames = () => players;
 
     let currentPlayer = players.X;
 
+    // to reset the player names
+    const resetPlayerNames = () => {
+        players.X.name = undefined
+        players.O.name = undefined
+        console.log(players);
+    };
+    
     const getCurrentPlayer = () => currentPlayer; 
     const getPlayerToken = (player) => players[player].token;
     const switchTurn = () => {
@@ -36,7 +41,7 @@ const playersModule = (() => {
     return {
         getCurrentPlayer,
         getPlayerToken,
-        getPlayerNames,
+        resetPlayerNames,
         switchTurn,
     };
 })();
@@ -102,6 +107,8 @@ const gameboardModule = (() => {
         cells.forEach(cell => cell.textContent = "");
         movesLeft = 9;
         movesLeftCount.textContent = movesLeft;
+        playersModule.resetPlayerNames();
+
 
 
         // for debugging, it shows the entry of each cell fromt he cell nodeList, to enable it, uncomment or
