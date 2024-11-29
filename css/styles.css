@@ -8,13 +8,50 @@ body {
     height: 100vh;
 }
 
-.container {
+/* holds the whole gameboard */
+.container { 
+    display: grid;
+    grid-template: repeat(3, max-content) / 1fr;
+    text-align: center;
+}
+
+.restart {
+    justify-self: center;
+    width: max-content;
+    font-size: 30px;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+}
+
+/* input fields for player1 and player2 styling */
+.container:first-of-type(div) {
+    display: flex;
+    width: 100px;
+}
+
+.container label {
+    display: block;
+}
+
+.gameboard-wrapper {
     display: grid;
     grid-template: repeat(3, 200px) / repeat(3, 200px);
 }
 
-.container > .cell {
+/* styling for each cell on the gameboard */
+.gameboard-wrapper > .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: 1px solid black;
     width: 200px;
     height: 200px;
+    font-size: 70px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.movesLeftDisplay {
+    font-size: 80px;
+    text-align: center;
 }
